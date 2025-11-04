@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class BulletAbstract : MonoBehaviour
@@ -12,15 +13,14 @@ public abstract class BulletAbstract : MonoBehaviour
         cam = Camera.main;
     }
 
-    void Update()
+    protected virtual bool IsOnCamera()
     {
-        Fly();
         Vector3 viewportPos = cam.WorldToViewportPoint(transform.position);
         if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1 || viewportPos.z < 0)
         {
-            gameObject.SetActive(false);
+            return false;
         }
+        return true;
     }
-
     protected abstract void Fly();
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using DG.Tweening;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] PlayerDataSO Data;
@@ -10,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rigi;
     public bool IsOnGround { get; private set; }
     float horizontalVelocity;
+    [SerializeField] float subSpeed;
     void Awake()
     {
         rigi = this.GetComponent<Rigidbody2D>();
@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
             horizontalVelocity = Mathf.Lerp(horizontalVelocity, Data.MaxSpeed * moveFlag, Data.Acceleration * Time.deltaTime);
         }
         else horizontalVelocity = Mathf.Lerp(horizontalVelocity, 0, Data.Deceleration * Time.deltaTime);
-        rigi.velocity = new Vector2(horizontalVelocity, rigi.velocity.y);
+        rigi.velocity = new Vector2(horizontalVelocity+subSpeed, rigi.velocity.y);
     }
 
     public void Jump()
@@ -37,7 +37,13 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckGround()
     {
-        IsOnGround = Physics2D.OverlapBox(CheckPoint.position, checkArea, 0, ground);
+        Collider2D check = Physics2D.OverlapBox(CheckPoint.position, checkArea, 0, ground);
+        IsOnGround = check;
+        if (check != null && check.CompareTag("Obstacle"))
+        {
+            subSpeed = check.gameObject.GetComponent<Obstacle>().GetVelocity.x;
+        }
+        else subSpeed = 0;
     }
 
     #region DrawCheckArea

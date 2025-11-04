@@ -21,12 +21,21 @@ public class PerlinBullet : BulletAbstract
         noiseFreq = Random.Range(1f, 2f);
 
     }
+     void Update()
+    {
+        Fly();
+        if (!IsOnCamera()) this.gameObject.SetActive(false);
+    }
 
     protected override void Fly()
     {
         timer += Time.deltaTime;
         float noise = (Mathf.PerlinNoise(seed, timer * noiseFreq) - 0.5f) * 2f;
         transform.position = startPos + direction * Data.Speed * timer + normal * (amplitude * noise);
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision != null && collision.CompareTag("Enemy")) this.gameObject.SetActive(false);
     }
 }
 
