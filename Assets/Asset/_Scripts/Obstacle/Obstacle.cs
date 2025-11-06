@@ -17,8 +17,7 @@ public class Obstacle : MonoBehaviour
         rigi.velocity = -Vector2.right * speed;
         if(Mathf.Abs(transform.position.x - Cam.transform.position.x) >= 20f)
         {
-            // để tạm, sau thay bằng disable object
-            transform.position = new Vector3(Cam.transform.position.x, transform.position.y, transform.position.z);
+            this.gameObject.SetActive(false);
         }
     }
     public Vector2 GetVelocity => rigi.velocity;

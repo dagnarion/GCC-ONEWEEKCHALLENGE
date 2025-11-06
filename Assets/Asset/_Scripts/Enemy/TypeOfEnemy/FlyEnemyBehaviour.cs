@@ -8,9 +8,8 @@ public class FlyEnemyBehaviour : IBehaviour
     float startY;
     float timer;
     float speed;
-    float amplitude = 2f;
+    float amplitude = 1f;
     float frequency = 2f;
-
     public FlyEnemyBehaviour(EnemyMovement _movement)
     {
         movement = _movement;
@@ -32,4 +31,5 @@ public class FlyEnemyBehaviour : IBehaviour
         timer = 0;
         speed = movement.enemyData.Speed;
     }
+
 }

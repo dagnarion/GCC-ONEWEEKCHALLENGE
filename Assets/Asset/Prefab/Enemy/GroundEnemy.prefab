@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1679371602744460258}
   - component: {fileID: 3401196243997378209}
   - component: {fileID: 4508728163391277440}
+  - component: {fileID: 929127074361359341}
+  - component: {fileID: 1977382528444933193}
   m_Layer: 0
   m_Name: GroundEnemy
   m_TagString: Enemy
@@ -100,6 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 755b01757ca954543912d5bc7dc562bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 929127074361359341}
+  Data: {fileID: 11400000, guid: 22cfd1494fc90c9428b80c34805fd0ce, type: 2}
+  movement: {fileID: 1679371602744460258}
+  coll: {fileID: 4508728163391277440}
+  ani: {fileID: 1977382528444933193}
 --- !u!114 &1679371602744460258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,14 +128,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4507930065399478006}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -139,7 +146,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &4508728163391277440
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -175,3 +182,36 @@ CapsuleCollider2D:
   m_Offset: {x: -0.023487091, y: 0}
   m_Size: {x: 1.0346737, y: 2.125}
   m_Direction: 0
+--- !u!114 &929127074361359341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507930065399478006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edeb3defd5c611f46b72e9108c2f04d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &1977382528444933193
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507930065399478006}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 57a531fa8fa6fc64d9d625995b91c6df, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

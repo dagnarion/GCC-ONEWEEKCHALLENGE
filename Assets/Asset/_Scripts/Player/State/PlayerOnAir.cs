@@ -5,22 +5,20 @@ using UnityEngine;
 public class PlayerOnAir : IState
 {
     PlayerController player;
-    int numberOfJumpHadUsed;
     public PlayerOnAir(PlayerController _player)
     {
         player = _player;
     }
     public void Enter()
     {
-        player.Movement.Jump();
-        numberOfJumpHadUsed = 1;
+        player.ani.Play("Falling");
     }
 
     public void LogicUpdate()
     {
-        if (player.Movement.IsOnGround) { player.StateMC.ChangeState<PlayerOnGround>(); return; }
         player.Movement.Move();
-        if (InputManager.Instance.IsJumpPressed && numberOfJumpHadUsed<1) { numberOfJumpHadUsed++; player.Movement.Jump(); }
+        if(player.Movement.IsOnObstacle) { player.StateMC.ChangeState<PlayerIdle>(); return; }
+        if(player.Movement.IsOnGround) { player.StateMC.ChangeState<PlayerMove>(); return; }
     }
 
     public void PhysicsUpdate()

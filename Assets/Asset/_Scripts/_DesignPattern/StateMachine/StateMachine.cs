@@ -18,7 +18,6 @@ public class StateMachine : MonoBehaviour
     public void AddState(IState state)
     {
         if (!states.ContainsKey(state.GetType())) states.Add(state.GetType(), state);
-        
     }
 
     public void ChangeState<T>() where T : IState

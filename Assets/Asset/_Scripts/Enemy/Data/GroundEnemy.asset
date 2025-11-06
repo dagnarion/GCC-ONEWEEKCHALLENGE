@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GroundEnemy
   m_EditorClassIdentifier: 
   <EnemyType>k__BackingField: 1
-  <BaseHp>k__BackingField: 5
+  <BaseHp>k__BackingField: 15
   <Damage>k__BackingField: 1
   <Speed>k__BackingField: 5

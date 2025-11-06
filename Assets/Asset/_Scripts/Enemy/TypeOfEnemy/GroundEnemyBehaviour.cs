@@ -14,4 +14,5 @@ public class GroundEnemyBehaviour : IBehaviour
         float speed = movement.enemyData.Speed;
         movement.rigi.velocity = Vector2.left * speed;
     }
+
 }

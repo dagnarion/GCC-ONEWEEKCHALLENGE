@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform CheckPoint;
     Rigidbody2D rigi;
     public bool IsOnGround { get; private set; }
+    public bool IsOnObstacle { get; private set; }
     float horizontalVelocity;
     [SerializeField] float subSpeed;
     void Awake()
@@ -22,12 +23,25 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         float moveFlag = InputManager.Instance.PlayerMove;
-        if (moveFlag != 0)
+        if (IsOnGround)
         {
-            horizontalVelocity = Mathf.Lerp(horizontalVelocity, Data.MaxSpeed * moveFlag, Data.Acceleration * Time.deltaTime);
+            if (moveFlag > 0)
+            {
+                horizontalVelocity = Mathf.Lerp(horizontalVelocity, Data.MaxSpeed * moveFlag, Data.Acceleration * Time.deltaTime);
+            }
+            else
+                if (moveFlag < 0) horizontalVelocity = Mathf.Lerp(horizontalVelocity, -Data.MaxSpeed * 0.75f, Data.Deceleration * Time.deltaTime);
+            if (moveFlag == 0) horizontalVelocity = 0;
         }
-        else horizontalVelocity = Mathf.Lerp(horizontalVelocity, 0, Data.Deceleration * Time.deltaTime);
-        rigi.velocity = new Vector2(horizontalVelocity+subSpeed, rigi.velocity.y);
+        else
+        {
+            if (moveFlag != 0)
+            {
+                horizontalVelocity = Mathf.Lerp(horizontalVelocity, Data.MaxSpeed * moveFlag, Data.Acceleration * Time.deltaTime);
+            }
+            else horizontalVelocity = Mathf.Lerp(horizontalVelocity, 0, Data.Acceleration * Time.deltaTime);
+        }
+        rigi.velocity = new Vector2(horizontalVelocity + subSpeed, rigi.velocity.y);
     }
 
     public void Jump()
@@ -35,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         rigi.velocity = new Vector2(horizontalVelocity, Data.JumpForce);
     }
 
+    public bool IsJumpDone() => rigi.velocity.y <= 0f;
     void CheckGround()
     {
         Collider2D check = Physics2D.OverlapBox(CheckPoint.position, checkArea, 0, ground);
@@ -42,8 +57,13 @@ public class PlayerMovement : MonoBehaviour
         if (check != null && check.CompareTag("Obstacle"))
         {
             subSpeed = check.gameObject.GetComponent<Obstacle>().GetVelocity.x;
+            IsOnObstacle = true;
         }
-        else subSpeed = 0;
+        else
+        {
+            IsOnObstacle = false;
+            subSpeed = 0;
+        }
     }
 
     #region DrawCheckArea

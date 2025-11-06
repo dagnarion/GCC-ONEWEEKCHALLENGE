@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class BulletAbstract : MonoBehaviour
 {
     [SerializeField] protected BulletDataSO Data;
+    [SerializeField] protected TrailRenderer trail;
     protected Camera cam;
 
     protected void Awake()

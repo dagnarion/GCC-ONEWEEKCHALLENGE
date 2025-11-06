@@ -35,7 +35,18 @@ public class PerlinBullet : BulletAbstract
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision != null && collision.CompareTag("Enemy")) this.gameObject.SetActive(false);
+        if (collision != null && collision.CompareTag("Enemy"))
+        {
+            if (collision.TryGetComponent<IAttackable>(out IAttackable attackable))
+            {
+                attackable.OnHit(Data.Damage);
+            }
+            this.gameObject.SetActive(false);
+        }
+    }
+    void OnDisable()
+    {
+        trail.Clear();
     }
 }
 

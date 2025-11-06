@@ -7,6 +7,7 @@ public class WaveSpawner : SpawnAbstract
     int numberEnemyOnWave = 5;
     float delayBetweenEnemy = 0.75f;
     [SerializeField] int numberOfEnemy = 1;
+    [SerializeField] protected GameObject prefab;
     Coroutine spawner;
     void Update()
     {
@@ -22,7 +23,7 @@ public class WaveSpawner : SpawnAbstract
         for(int i = 1;i<=numberEnemyOnWave;i++)
         {
             yield return new WaitForSeconds(delayBetweenEnemy);
-            Spawn();
+            Spawn(prefab);
         }
     }
 
