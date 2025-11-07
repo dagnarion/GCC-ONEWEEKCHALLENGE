@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993f4789fc640174f9d48ca5a2807e85, type: 3}
   m_Name: NormalBullet
   m_EditorClassIdentifier: 
-  type: 1
+  <type>k__BackingField: 0
   <Speed>k__BackingField: 25
-  <Damage>k__BackingField: 1
+  <Damage>k__BackingField: 2

@@ -6,8 +6,8 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     Camera mainCam;
-    [SerializeField] List<GameObject> bullets; // demo đạn
-    [SerializeField] GameObject bullet;
+    [SerializeField] List<GameObject> bullets;
+    GameObject currentBullet;
     [SerializeField] Transform firePoint;
     [SerializeField] Transform holder;
     [SerializeField] float DelayTime;
@@ -19,6 +19,10 @@ public class Gun : MonoBehaviour
         mainCam = Camera.main;
     }
 
+    void Start()
+    {
+        currentBullet = bullets[1];
+    }
     void Update()
     {
         ChangeDirection(mainCam.ScreenToWorldPoint(Input.mousePosition));
@@ -28,21 +32,18 @@ public class Gun : MonoBehaviour
             timer = 0;
         }
         timer += Time.deltaTime;
-        SwitchBullet();
     }
 
-    void SwitchBullet()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1)) { bullet = bullets[0]; }
-        if(Input.GetKeyDown(KeyCode.Alpha2)) { bullet = bullets[1]; }
-        if(Input.GetKeyDown(KeyCode.Alpha3)) { bullet = bullets[2]; }
-    }
-    
     void ChangeDirection(Vector3 mousePos)
     {
         Vector2 dir = (mousePos - this.transform.position).normalized;
         float Angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, Angle);
+    }
+
+    public void ChangeBullet(BulletDataSO bullet)
+    {
+        currentBullet = bullets[(int)bullet.type];
     }
 
     void Shoot()
@@ -62,7 +63,7 @@ public class Gun : MonoBehaviour
 
     void Shoot(Vector2 position,Quaternion rotation)
     {
-        GameObject obj = ObjectPooling.Instance.Pool(bullet,position,rotation,holder);
+        GameObject obj = ObjectPooling.Instance.Pool(currentBullet,position,rotation,holder);
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.SetActive(true);

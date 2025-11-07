@@ -14,5 +14,5 @@ public class GameManager : Singleton<GameManager>
 }
 public enum GameState
 {
-    OnPlay, OnPause
+    OnPlay = 0, OnPause = 1,OnShop = 2
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstacle
   - Enemy
+  - FxTemporaire
+  - Loss
   layers:
   - Default
   - TransparentFX
