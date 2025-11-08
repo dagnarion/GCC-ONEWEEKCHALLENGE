@@ -12,6 +12,7 @@ public class PlayerIdle : IState
 
     public void Enter()
     {
+        player.Movement.ResetNumberOfJump();
         player.ani.Play("Idle");
     }
 

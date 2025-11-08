@@ -9,15 +9,15 @@ public class EnemySpawnItem : MonoBehaviour
     public void Spawn()
     {
         int rand = Random.Range(0, 100);
-        if (rand < 95)
+        if (rand < 80)
         {
             int randomNumber = Random.Range(0, money.Count - 1);
             ObjectSpawn(money[randomNumber]);
         }
         else
         {
-            int randomNumber = Random.Range(0, bullet.Count - 1);
-            ObjectSpawn(money[randomNumber]);
+            int randomNumber = Random.Range(0, bullet.Count);
+            ObjectSpawn(bullet[randomNumber]);
         }
     }
     

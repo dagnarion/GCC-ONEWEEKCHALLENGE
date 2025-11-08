@@ -22,7 +22,7 @@ public class FlyEnemyBehaviour : IBehaviour
     {
         timer += Time.deltaTime;
         Vector2 pos = movement.transform.position;
-        pos.x -= speed * Time.deltaTime;
+        pos.x -= (speed+LevelManager.Instance.CurrentSpeed) * Time.deltaTime;
         pos.y = startY + Mathf.Sin(timer * frequency) * amplitude;
         movement.rigi.MovePosition(pos);
     }

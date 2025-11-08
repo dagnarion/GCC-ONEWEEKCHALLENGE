@@ -49,7 +49,11 @@ public class PlayerController : MonoBehaviour, IAttackable, ICollector
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Loss")) this.gameObject.SetActive(false);
+        if (collision.CompareTag("Loss"))
+        {
+            this.gameObject.SetActive(false);
+            GameManager.Instance.UpdateGameState(GameState.GameOver);
+        }
     }
 
     public void Loot(ItemData items)

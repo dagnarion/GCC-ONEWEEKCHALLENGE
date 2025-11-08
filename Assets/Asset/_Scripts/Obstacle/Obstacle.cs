@@ -14,7 +14,7 @@ public class Obstacle : MonoBehaviour
     }
     void Update()
     {
-        rigi.velocity = -Vector2.right * speed;
+        rigi.velocity = -Vector2.right * (speed + LevelManager.Instance.CurrentSpeed);
         if(Mathf.Abs(transform.position.x - Cam.transform.position.x) >= 20f)
         {
             this.gameObject.SetActive(false);

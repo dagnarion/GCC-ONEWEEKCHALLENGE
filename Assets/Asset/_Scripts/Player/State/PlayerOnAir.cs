@@ -17,6 +17,7 @@ public class PlayerOnAir : IState
     public void LogicUpdate()
     {
         player.Movement.Move();
+        if(player.Movement.NumberOfJumpHadUsed <1 && InputManager.Instance.IsJumpPressed) { player.StateMC.ChangeState<PlayerJump>(); return; }
         if(player.Movement.IsOnObstacle) { player.StateMC.ChangeState<PlayerIdle>(); return; }
         if(player.Movement.IsOnGround) { player.StateMC.ChangeState<PlayerMove>(); return; }
     }

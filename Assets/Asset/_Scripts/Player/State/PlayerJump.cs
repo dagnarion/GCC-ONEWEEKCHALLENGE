@@ -17,6 +17,7 @@ public class PlayerJump : IState
 
     public void LogicUpdate()
     {
+        player.Movement.Move(); 
         if (player.Movement.IsOnObstacle)
         {
             player.StateMC.ChangeState<PlayerIdle>();

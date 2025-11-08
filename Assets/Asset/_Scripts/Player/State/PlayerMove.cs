@@ -12,6 +12,7 @@ public class PlayerMove : IState
 
     public void Enter()
     {
+       player.Movement.ResetNumberOfJump();
        player.ani.Play("Run");
     }
 

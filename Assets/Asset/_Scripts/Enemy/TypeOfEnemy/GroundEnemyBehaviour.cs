@@ -12,7 +12,7 @@ public class GroundEnemyBehaviour : IBehaviour
     public void Move()
     {
         float speed = movement.enemyData.Speed;
-        movement.rigi.velocity = Vector2.left * speed;
+        movement.rigi.velocity = Vector2.left * (speed+LevelManager.Instance.CurrentSpeed);
     }
 
 }

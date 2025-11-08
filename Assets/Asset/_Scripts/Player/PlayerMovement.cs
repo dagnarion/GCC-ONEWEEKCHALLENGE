@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsOnGround { get; private set; }
     public bool IsOnObstacle { get; private set; }
     float horizontalVelocity;
+    public int NumberOfJumpHadUsed { get; private set; }
     [SerializeField] float subSpeed;
     void Awake()
     {
@@ -46,8 +47,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
+        NumberOfJumpHadUsed++;
         rigi.velocity = new Vector2(horizontalVelocity, Data.JumpForce);
     }
+
+    public void ResetNumberOfJump() => NumberOfJumpHadUsed = 0;
 
     public bool IsJumpDone() => rigi.velocity.y <= 0f;
     void CheckGround()
