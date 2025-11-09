@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IAttackable
@@ -46,6 +44,7 @@ public class EnemyController : MonoBehaviour, IAttackable
         {
             SpawnParticle();
             spawnItem.Spawn();
+            AudioManager.Instance.PlaySound(SfxSoundType.Explosion,2);
             this.gameObject.SetActive(false);
             return;
         }

@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EconomyManager : Singleton<EconomyManager>
+public class EconomyManager : SingletonDonDestroyOnLoad<EconomyManager>
 {
     [field: SerializeField] public int CurrentMoney { get; private set; }
-    // để tạm
-    void Start()
-    {
-        ResetMoney();
-    }
+
     public void ResetMoney()
     {
         CurrentMoney = 0;

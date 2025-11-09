@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         CheckGround();
+        Debug.Log(NumberOfJumpHadUsed);
     }
 
     public void Move()
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         rigi.velocity = new Vector2(horizontalVelocity, Data.JumpForce);
     }
 
-    public void ResetNumberOfJump() => NumberOfJumpHadUsed = 0;
+    public void ResetNumberOfJump() => NumberOfJumpHadUsed = 1;
 
     public bool IsJumpDone() => rigi.velocity.y <= 0f;
     void CheckGround()

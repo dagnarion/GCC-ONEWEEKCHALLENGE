@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerJump : IState
 {
@@ -18,17 +15,7 @@ public class PlayerJump : IState
     public void LogicUpdate()
     {
         player.Movement.Move(); 
-        if (player.Movement.IsOnObstacle)
-        {
-            player.StateMC.ChangeState<PlayerIdle>();
-            return;
-        }
-        if (player.Movement.IsOnGround)
-        {
-            player.StateMC.ChangeState<PlayerMove>();
-            return;
-        }
-        if (player.Movement.IsJumpDone())
+        if (player.Movement.IsJumpDone() || InputManager.Instance.IsJumpReleased)
         {
             player.StateMC.ChangeState<PlayerOnAir>();
             return;

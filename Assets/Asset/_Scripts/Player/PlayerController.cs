@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IAttackable, ICollector
@@ -24,6 +22,7 @@ public class PlayerController : MonoBehaviour, IAttackable, ICollector
     {
         health.Init(Data.BaseHp);
         health.Reborn();
+        gun.Init();
         StateMC.ChangeState<PlayerMove>();
     }
 
@@ -33,6 +32,9 @@ public class PlayerController : MonoBehaviour, IAttackable, ICollector
         if (!health.IsAlive())
         {
             SpawnParticle();
+            GameManager.Instance.UpdateGameState(GameState.GameOver);
+            UIManager.Instance.CloseAll();
+            UIManager.Instance.OpenUI<CanvasGameOver>();
             gameObject.SetActive(false);
             return;
         }
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour, IAttackable, ICollector
         {
             this.gameObject.SetActive(false);
             GameManager.Instance.UpdateGameState(GameState.GameOver);
+            UIManager.Instance.CloseAll();
+            UIManager.Instance.OpenUI<CanvasGameOver>();
         }
     }
 

@@ -1,24 +1,39 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : SingletonDonDestroyOnLoad<AudioManager>
 {
-    [SerializeField] SoundList[] soundList;
-    AudioSource audioSource;
+    [SerializeField] SoundList[] sfxSoundList;
+    [SerializeField] SoundList[] musicSoundList;
+    [SerializeField] AudioSource sfxSource;
+    [SerializeField] AudioSource musicSource;
     void Start()
     {
-        audioSource = this.GetComponent<AudioSource>();
+        musicSource.loop = true;
     }
-    public static void PlaySound(SoundType sound, float volume = 1)
+    public void PlaySound(SfxSoundType sound, float volume = 1)
     {
-        AudioClip[] clips = Instance.soundList[(int)sound].Sounds;
+        AudioClip[] clips = Instance.sfxSoundList[(int)sound].Sounds;
         AudioClip randomSound = clips[UnityEngine.Random.Range(0, clips.Length)];
-        Instance.audioSource.PlayOneShot(randomSound);
-        //  Instance.audioSource.PlayOneShot(Instance.soundList[(int)sound]);
+        Instance.sfxSource.PlayOneShot(randomSound, volume);
+        //  Instance.audioSource.PlayOneShot(Instance.sfxSoundList[(int)sound]);
+    }
+
+    public void PlayMusic(MusicSoundType musicSound, float volume = 1)
+    {
+        StopMusic();
+        AudioClip[] clips = Instance.musicSoundList[(int)musicSound].Sounds;
+        AudioClip music = clips[0];
+        musicSource.clip = music;
+        musicSource.volume = volume;
+        musicSource.Play();
+    }
+    public void StopMusic()
+    {
+        if (musicSource != null) musicSource.Stop();
     }
 }
+
 [Serializable]
 public struct SoundList
 {
@@ -27,12 +42,15 @@ public struct SoundList
     [SerializeField] AudioClip[] sounds;
 }
 
-public enum SoundType
+public enum SfxSoundType
 {
-    Bullet = 0,
-    PlayerHit = 1,
-    PlayerDead = 2,
-    EnemyHit = 3,
-    EnemyDead = 4,
-    Coin = 5
+    Gun = 0,
+    Explosion = 1,
+    Coin = 2,
+    Button = 3
+}
+public enum MusicSoundType
+{
+    Menu = 0,
+    InGame = 1,
 }

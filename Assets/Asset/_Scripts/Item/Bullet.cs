@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -26,6 +24,7 @@ public class Bullet : MonoBehaviour
         if (collision.TryGetComponent<ICollector>(out ICollector collector))
         {
             collector.Loot(bulletData);
+            AudioManager.Instance.PlaySound(SfxSoundType.Coin,0.5f);
             this.gameObject.SetActive(false);
         }
     }

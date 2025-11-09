@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : Singleton<InputManager>
+public class InputManager : SingletonDonDestroyOnLoad<InputManager>
 {
     public float PlayerMove { get; private set; }
     public bool IsJumpPressed { get; private set; }
@@ -22,6 +20,11 @@ public class InputManager : Singleton<InputManager>
     void Update()
     {
         SwitchInput(GameManager.Instance.currentGameState);
+        if(IsPauseButtonPressed)
+        {
+            UIManager.Instance.OpenUI<CanvasPause>();
+            GameManager.Instance.UpdateGameState(GameState.OnPause);
+        }
     }
 
     void SwitchInput(GameState state)

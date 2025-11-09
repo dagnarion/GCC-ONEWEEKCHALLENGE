@@ -1,22 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : SingletonDonDestroyOnLoad<GameManager>
 {
     public GameState currentGameState;
     public static event Action<GameState> OnGameStateChange;
-    protected override void Awake()
-    {
-        base.Awake();
-        DontDestroyOnLoad(Instance);
-    }
     void Start()
     {
-        UpdateGameState(GameState.OnPlay);
+        UpdateGameState(GameState.OnMenu);
     }
-
+    
     public void UpdateGameState(GameState state)
     {
         currentGameState = state;
@@ -31,8 +24,8 @@ public class GameManager : Singleton<GameManager>
             case GameState.GameOver:
                 GameOver();
                 break;
-            case GameState.OnShop:
-                OnShop();
+            case GameState.OnMenu:
+                GameMenu();
                 break;
         }
         OnGameStateChange?.Invoke(state);
@@ -41,22 +34,27 @@ public class GameManager : Singleton<GameManager>
     void OnPlay()
     {
         Time.timeScale = 1f;
+        AudioManager.Instance.PlayMusic(MusicSoundType.InGame, 1);
     }
 
     void OnPause()
     {
         Time.timeScale = 0f;
+        AudioManager.Instance.StopMusic();
     }
+
     void GameOver()
     {
         Time.timeScale = 0f;
+        AudioManager.Instance.StopMusic();
     }
-    void OnShop()
+    void GameMenu()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 1;
+        AudioManager.Instance.PlayMusic(MusicSoundType.Menu,0.75f);
     }
 }
 public enum GameState
 {
-    OnPlay = 0, OnPause = 1,OnShop = 2,GameOver = 3,Loading = 4
+    OnPlay = 0, OnPause = 1,OnShop = 2,GameOver = 3,OnMenu = 4
 }

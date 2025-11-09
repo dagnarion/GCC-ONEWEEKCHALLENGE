@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
     int BaseHp;
-    int currentHp;
+    public int currentHp{ get; private set; }
     public void Init(int _BaseHp)
     {
         BaseHp = _BaseHp;

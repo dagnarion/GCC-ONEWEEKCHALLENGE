@@ -15,4 +15,4 @@ MonoBehaviour:
   <EnemyType>k__BackingField: 0
   <BaseHp>k__BackingField: 5
   <Damage>k__BackingField: 1
-  <Speed>k__BackingField: 15
+  <Speed>k__BackingField: 5

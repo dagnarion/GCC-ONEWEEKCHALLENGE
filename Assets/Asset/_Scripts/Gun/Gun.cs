@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -18,16 +16,18 @@ public class Gun : MonoBehaviour
     {
         mainCam = Camera.main;
     }
-
-    void Start()
+    public void Init(int _currentBullet = 0)
     {
-        currentBullet = bullets[1];
+        numberOfBulletPath = 1;
+        currentBullet = bullets[_currentBullet];
     }
+
     void Update()
     {
         ChangeDirection(mainCam.ScreenToWorldPoint(Input.mousePosition));
         if (Input.GetMouseButton(0) && timer >= DelayTime)
         {
+            AudioManager.Instance.PlaySound(SfxSoundType.Gun,0.75f);
             Shoot();
             timer = 0;
         }
@@ -43,6 +43,7 @@ public class Gun : MonoBehaviour
 
     public void ChangeBullet(BulletDataSO bullet)
     {
+        if (currentBullet == bullets[(int)bullet.type]) { numberOfBulletPath = Mathf.Clamp(numberOfBulletPath + 1, 1, 5); return; }
         currentBullet = bullets[(int)bullet.type];
     }
 
@@ -52,18 +53,18 @@ public class Gun : MonoBehaviour
         Quaternion rotation = firePoint.rotation;
         Vector3 euler = rotation.eulerAngles;
         if (numberOfBulletPath % 2 != 0) Shoot(originPosition, rotation);
-        for(int i = 1;i<=numberOfBulletPath/2;i++)
+        for (int i = 1; i <= numberOfBulletPath / 2; i++)
         {
-            rotation = Quaternion.Euler(0, 0,euler.z+BulletAngle * i);
+            rotation = Quaternion.Euler(0, 0, euler.z + BulletAngle * i);
             Shoot(originPosition, rotation);
-            rotation = Quaternion.Euler(0, 0, euler.z-BulletAngle * i);
+            rotation = Quaternion.Euler(0, 0, euler.z - BulletAngle * i);
             Shoot(originPosition, rotation);
         }
     }
 
-    void Shoot(Vector2 position,Quaternion rotation)
+    void Shoot(Vector2 position, Quaternion rotation)
     {
-        GameObject obj = ObjectPooling.Instance.Pool(currentBullet,position,rotation,holder);
+        GameObject obj = ObjectPooling.Instance.Pool(currentBullet, position, rotation, holder);
         obj.transform.position = position;
         obj.transform.rotation = rotation;
         obj.SetActive(true);
